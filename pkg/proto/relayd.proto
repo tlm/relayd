@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package proto;
+
+service Relays {
+  rpc List(ListRelaysRequest) returns (ListRelaysResponse);
+  rpc Transition(TransitionRelayRequest) returns (TransitionRelayResponse);
+  rpc Watch(WatchRelaysRequest) returns (stream WatchRelaysResponse);
+}
+
+message ListRelaysRequest {
+}
+
+message ListRelaysResponse {
+  repeated Relay relays = 1;
+}
+
+message Relay {
+  string id = 1;
+  string state = 2;
+  repeated Transition transitions = 3;
+}
+
+message Transition {
+  string from_state = 1;
+  repeated string to_states = 2;
+}
+
+message TransitionRelayRequest {
+  string relay_id = 1;
+  string to_state = 2;
+}
+
+message TransitionRelayResponse {
+}
+
+message WatchRelaysRequest {
+}
+
+message WatchRelaysResponse {
+  Relay relay = 1;
+}
